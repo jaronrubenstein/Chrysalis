@@ -697,8 +697,10 @@
   };
 
   async function findMonarchTab() {
-    const tabs = await chrome.tabs.query({ url: MONARCH_ORIGIN + '/*' });
-    return tabs.length ? tabs[0] : null;
+    const tabs = await chrome.tabs.query({ url: MONARCH_ORIGINS.map((o) => o + '/*') });
+    if (!tabs.length) return null;
+    const sorted = [...tabs].sort((a, b) => (b.lastAccessed || 0) - (a.lastAccessed || 0));
+    return sorted[0] || null;
   }
 
   function isPLAppTab(url) {

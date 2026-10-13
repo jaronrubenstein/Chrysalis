@@ -697,7 +697,7 @@
   };
 
   async function findMonarchTab() {
-    const tabs = await chrome.tabs.query({ url: MONARCH_ORIGINS.map((o) => o + '/*') });
+    const tabs = await chrome.tabs.query({ url: MONARCH_ORIGIN + '/*' });
     if (!tabs.length) return null;
     const sorted = [...tabs].sort((a, b) => (b.lastAccessed || 0) - (a.lastAccessed || 0));
     return sorted[0] || null;
